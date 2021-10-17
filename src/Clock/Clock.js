@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Clock.scss';
 
 function Clock() {
   const [breakLength, setBreakLength] = useState(5);
@@ -73,7 +74,7 @@ function Clock() {
 
     const newIntervalId = setInterval(() => {
       setTimeLeft((prevCount) => prevCount - 1);
-    }, 1000);
+    }, 30);
     setIntervalId(newIntervalId);
   };
 
@@ -81,10 +82,29 @@ function Clock() {
   if (minutes === '0-1' && seconds === '0-1') {
     audioBeep.play();
   }
+  //-----------------------------------animation-------------------------
+
+  let dotArray = [];
+  for (let i = 0; i < breakLength; i++) {
+    //---substitute breaklenght with timeleft---------
+    dotArray.push(i);
+    console.log(dotArray);
+  }
+
+  const dots = dotArray.map((item, index) => {
+    return (
+      <div
+        key={index}
+        className={index === Math.floor(timeLeft / 60) ? 'dotBright' : 'dot'}
+      ></div>
+    );
+  });
 
   //-------------------------------------------------------------------
   return (
-    <div>
+    <div className='all'>
+      {/* <div className='container'></div> */}
+      <div>{dots}</div>
       <h1 data-testid='header'>My Clock 1</h1>
       <div id='break-label'>Break Length</div>
       <div id='break-length'>{breakLength}</div>
@@ -110,13 +130,25 @@ function Clock() {
       <button id='start_stop' onClick={countdown}>
         Start-Stop
       </button>
-      <button id='reset' onClick={reset}>
+      <button id='reset' className='btn btn-danger' onClick={reset}>
         reset
       </button>
       <audio
         id='beep'
         src='https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav'
       ></audio>
+      <div class='container'>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   );
 }

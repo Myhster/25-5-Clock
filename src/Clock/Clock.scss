@@ -1,0 +1,143 @@
+#break-increment {
+  color: aqua;
+}
+h1 {
+  color: aqua;
+}
+
+body {
+  background: rgb(190, 190, 190);
+}
+.dot {
+  height: 20px;
+  width: 20px;
+  border: solid;
+  border-radius: 50%;
+  margin: auto;
+  transition: 2s;
+  transition-timing-function: ease-in-out;
+}
+
+.dotBright {
+  @extend .dot;
+  background: aqua;
+}
+
+/* .all {
+  display: flex;
+
+  align-content: center;
+} */
+// Width and height of the parent element
+
+//---------------------------------------------------------------------------
+$diameter: 140px;
+$radius: $diameter / 2;
+
+// The number of child elements
+$elements: 10;
+
+// The size of the child element
+$element-diameter: 5px;
+$element-radius: $element-diameter / 2;
+
+$element-color: #f0515b;
+$circumference-color: #8d60a8;
+$bg-color: #291738;
+
+@function pow($base, $exp) {
+  $value: $base;
+  @if $exp > 1 {
+    @for $i from 2 through $exp {
+      $value: $value * $base;
+    }
+  }
+  @if $exp < 1 {
+    @for $i from 0 through -$exp {
+      $value: $value / $base;
+    }
+  }
+  @return $value;
+}
+
+@function fact($num) {
+  $fact: 1;
+  @if $num > 0 {
+    @for $i from 1 through $num {
+      $fact: $fact * $i;
+    }
+  }
+  @return $fact;
+}
+
+@function _to_unitless_rad($angle) {
+  $pi: 3.14159265359;
+  @if unit($angle) == 'deg' {
+    $angle: $angle / 180deg * $pi;
+  }
+  @if unit($angle) == 'rad' {
+    $angle: $angle / 1rad;
+  }
+  @return $angle;
+}
+
+@function sin($angle) {
+  $a: _to_unitless_rad($angle);
+  $sin: $a;
+  @for $n from 1 through 10 {
+    $sin: $sin + (pow(-1, $n) / fact(2 * $n + 1)) * pow($a, (2 * $n + 1));
+  }
+  @return $sin;
+}
+
+@function cos($angle) {
+  $a: _to_unitless_rad($angle);
+  $cos: 1;
+  @for $n from 1 through 10 {
+    $cos: $cos + (pow(-1, $n) / fact(2 * $n)) * pow($a, 2 * $n);
+  }
+  @return $cos;
+}
+
+@function tan($angle) {
+  @return sin($angle) / cos($angle);
+}
+
+@mixin position() {
+  @for $n from 1 through $elements {
+    span:nth-of-type(#{$n}) {
+      $angle: (360deg / $elements) * $n;
+      left: round($radius + ($radius * sin($angle)) - $element-radius);
+      top: round($radius - ($radius * cos($angle)) - $element-radius);
+      animation-delay: 0.1s * $n;
+    }
+  }
+}
+
+body {
+  background: $bg-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  width: $diameter;
+  height: $diameter;
+  background: $circumference-color;
+  position: relative;
+  border-radius: 50%;
+  @include position;
+  span {
+    border-radius: 50%;
+    position: absolute;
+    background: $element-color;
+    display: block;
+    width: $element-diameter;
+    height: $element-diameter;
+  }
+}
+
+//--------------------------------------------------------------------------

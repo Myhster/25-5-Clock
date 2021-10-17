@@ -74,7 +74,7 @@ function Clock() {
 
     const newIntervalId = setInterval(() => {
       setTimeLeft((prevCount) => prevCount - 1);
-    }, 30);
+    }, 1000);
     setIntervalId(newIntervalId);
   };
 
@@ -94,30 +94,32 @@ function Clock() {
   const dots = dotArray.map((item, index) => {
     let elements = dotArray.length;
     let radius = 50;
-    let elementRadius = 1;
-    let angle = (360 / elements) * index;
+    let elementRadius = 0;
+    let angle = ((2 * Math.PI) / elements) * item;
+    console.log('angle ' + angle);
+
+    console.log('cos ' + Math.cos(Math.PI / 90));
+
     let style = {
       position: 'absolute',
       display: 'block',
-      left: radius + radius * Math.sin(angle) - elementRadius,
+      right: radius + radius * Math.sin(angle) - elementRadius,
       top: radius - radius * Math.cos(angle) - elementRadius,
     };
 
     return (
-      <div>
-        <div
-          key={index}
-          style={style}
-          className={index === Math.floor(timeLeft / 60) ? 'dotBright' : 'dot'}
-        ></div>
-      </div>
+      <div
+        key={index}
+        style={style}
+        className={index === Math.floor(timeLeft / 60) ? 'dotBright' : 'dot'}
+      ></div>
     );
   });
 
   //-------------------------------------------------------------------
   return (
     <div className='all'>
-      <div className='dot-container'> {dots}</div>
+      <div className='dotContainer'> {dots}</div>
 
       <h1 data-testid='header'>My Clock 1</h1>
       <div id='break-label'>Break Length</div>

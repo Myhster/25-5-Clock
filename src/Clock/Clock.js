@@ -92,19 +92,33 @@ function Clock() {
   }
 
   const dots = dotArray.map((item, index) => {
+    let elements = dotArray.length;
+    let radius = 50;
+    let elementRadius = 1;
+    let angle = (360 / elements) * index;
+    let style = {
+      position: 'absolute',
+      display: 'block',
+      left: radius + radius * Math.sin(angle) - elementRadius,
+      top: radius - radius * Math.cos(angle) - elementRadius,
+    };
+
     return (
-      <div
-        key={index}
-        className={index === Math.floor(timeLeft / 60) ? 'dotBright' : 'dot'}
-      ></div>
+      <div>
+        <div
+          key={index}
+          style={style}
+          className={index === Math.floor(timeLeft / 60) ? 'dotBright' : 'dot'}
+        ></div>
+      </div>
     );
   });
 
   //-------------------------------------------------------------------
   return (
     <div className='all'>
-      {/* <div className='container'></div> */}
-      <div>{dots}</div>
+      <div className='dot-container'> {dots}</div>
+
       <h1 data-testid='header'>My Clock 1</h1>
       <div id='break-label'>Break Length</div>
       <div id='break-length'>{breakLength}</div>
@@ -137,7 +151,7 @@ function Clock() {
         id='beep'
         src='https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav'
       ></audio>
-      <div class='container'>
+      {/* <div className='container'>
         <span></span>
         <span></span>
         <span></span>
@@ -148,7 +162,7 @@ function Clock() {
         <span></span>
         <span></span>
         <span></span>
-      </div>
+      </div> */}
     </div>
   );
 }

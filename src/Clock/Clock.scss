@@ -11,7 +11,7 @@ body {
 .dot {
   height: 20px;
   width: 20px;
-  border: solid;
+  border: solid rgb(190, 190, 190);
   border-radius: 50%;
   margin: auto;
   transition: 2s;
@@ -21,6 +21,10 @@ body {
 .dotBright {
   @extend .dot;
   background: aqua;
+}
+
+.dot-container {
+  margin: auto;
 }
 
 /* .all {
@@ -35,7 +39,7 @@ $diameter: 140px;
 $radius: $diameter / 2;
 
 // The number of child elements
-$elements: 10;
+$elements: 5;
 
 // The size of the child element
 $element-diameter: 5px;

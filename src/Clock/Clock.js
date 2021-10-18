@@ -11,10 +11,12 @@ function Clock() {
   const breakDecrement = () => {
     if (breakLength > 1) {
       setBreakLength(breakLength - 1);
+      setTimeLeft(breakLength * 60 - 60);
     }
   };
   const breakIncrement = () => {
     if (breakLength < 60) setBreakLength(breakLength + 1);
+    setTimeLeft(breakLength * 60 + 60);
   };
   const sessionDecrement = () => {
     if (sessionLength > 1) {
@@ -74,7 +76,7 @@ function Clock() {
 
     const newIntervalId = setInterval(() => {
       setTimeLeft((prevCount) => prevCount - 1);
-    }, 1000);
+    }, 100);
     setIntervalId(newIntervalId);
   };
 
@@ -85,24 +87,25 @@ function Clock() {
   //-----------------------------------animation-------------------------
 
   let dotArray = [];
-  for (let i = 0; i < breakLength; i++) {
-    //---substitute breaklenght with timeleft---------
-    dotArray.push(i);
-    console.log(dotArray);
+  if (sessionOn === true) {
+    for (let i = 0; i < sessionLength; i++) {
+      dotArray.push(i);
+    }
+  } else {
+    for (let i = 0; i < breakLength; i++) {
+      dotArray.push(i);
+    }
   }
 
   const dots = dotArray.map((item, index) => {
     let elements = dotArray.length;
-    let radius = 50;
-    let elementRadius = 0;
+    let radius = 150;
+    let elementRadius = 5;
     let angle = ((2 * Math.PI) / elements) * item;
-    console.log('angle ' + angle);
-
-    console.log('cos ' + Math.cos(Math.PI / 90));
 
     let style = {
       position: 'absolute',
-      display: 'block',
+      //display: 'block',
       right: radius + radius * Math.sin(angle) - elementRadius,
       top: radius - radius * Math.cos(angle) - elementRadius,
     };
@@ -116,55 +119,73 @@ function Clock() {
     );
   });
 
+  let gray = {
+    filter: 'grayscale(80%)',
+    transition: '1s',
+    transitionTimingFunction: 'ease-out',
+  };
+  let grayStyle = {};
+
+  if (intervalId === 0) {
+    grayStyle = gray;
+  }
+
   //-------------------------------------------------------------------
   return (
-    <div className='all'>
-      <div className='dotContainer'> {dots}</div>
-
-      <h1 data-testid='header'>My Clock 1</h1>
-      <div id='break-label'>Break Length</div>
-      <div id='break-length'>{breakLength}</div>
-      <div id='session-label'>Session Length</div>
-      <div id='session-length'>{sessionLength}</div>
-      <button id='break-decrement' onClick={breakDecrement}>
-        Break-decrement
-      </button>
-      <button id='break-increment' onClick={breakIncrement}>
-        Break-increment
-      </button>
-      <button id='session-decrement' onClick={sessionDecrement}>
-        session-decrement
-      </button>
-      <button id='session-increment' onClick={sessionIncrement}>
-        session-increment
-      </button>
-
-      <div id='timer-label'>{sessionOn ? 'Session' : 'Break'}</div>
-      <div id='time-left'>
-        {minutes}:{seconds}
+    <div className='all' style={grayStyle}>
+      <div className='dotContainer'>
+        <div className='dotCont'>
+          {dots}
+          <div id='time-left'>
+            {minutes}:{seconds}
+          </div>
+        </div>
       </div>
-      <button id='start_stop' onClick={countdown}>
-        Start-Stop
-      </button>
-      <button id='reset' className='btn btn-danger' onClick={reset}>
-        reset
-      </button>
+      <div className='controlElements'>
+        <div className='breakControl'>
+          <div
+            id='break-increment'
+            className='triButton increase'
+            onClick={breakIncrement}
+          ></div>
+          <div id='break-label'>Break Length</div>
+          <div id='break-length'>{breakLength}</div>
+          <div
+            id='break-decrement'
+            className='triButton decrease'
+            onClick={breakDecrement}
+          ></div>
+        </div>
+        <div className='startReset'>
+          <div id='timer-label'>{sessionOn ? 'Session' : 'Break'}</div>
+
+          <button id='start_stop' onClick={countdown}>
+            Start-Stop
+          </button>
+          <button id='reset' className='btn btn-danger' onClick={reset}>
+            reset
+          </button>
+        </div>
+        <div className='sessionControl'>
+          <div
+            id='session-decrement'
+            className='triButton increase'
+            onClick={sessionDecrement}
+          ></div>
+          <div id='session-label'>Session Length</div>
+          <div id='session-length'>{sessionLength}</div>
+          <div
+            id='session-increment'
+            className='triButton decrease'
+            onClick={sessionIncrement}
+          ></div>
+        </div>
+      </div>
+
       <audio
         id='beep'
         src='https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav'
       ></audio>
-      {/* <div className='container'>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div> */}
     </div>
   );
 }

@@ -128,13 +128,15 @@ function Clock() {
 
   if (intervalId === 0) {
     grayStyle = gray;
+  } else {
+    grayStyle = { transition: '1s', transitionTimingFunction: 'ease-out' };
   }
 
   //-------------------------------------------------------------------
   return (
-    <div className='all' style={grayStyle}>
+    <div className='all'>
       <div className='dotContainer'>
-        <div className='dotCont'>
+        <div className='dotCont' style={grayStyle}>
           {dots}
           <div id='time-left'>
             {minutes}:{seconds}
@@ -160,7 +162,7 @@ function Clock() {
           <div id='timer-label'>{sessionOn ? 'Session' : 'Break'}</div>
 
           <button id='start_stop' onClick={countdown}>
-            Start-Stop
+            {intervalId ? 'Stop' : <div>HI</div>}
           </button>
           <button id='reset' className='btn btn-danger' onClick={reset}>
             reset

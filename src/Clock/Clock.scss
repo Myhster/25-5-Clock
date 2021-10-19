@@ -25,13 +25,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 62vh;
+  height: 62%;
 }
 .dotCont {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  margin-top: 50px;
+  margin: 50px;
   background-color: rgb(94, 172, 146);
   display: flex;
   justify-content: center;
@@ -43,7 +43,7 @@ body {
   background: rgb(159, 182, 136);
   display: flex;
   justify-content: space-evenly;
-  height: 38vh;
+  height: auto;
 }
 
 .triButton {
@@ -53,7 +53,7 @@ body {
 }
 .triButton:hover {
   transform: scale(1.1);
-  filter: drop-shadow(1px 1px 5px) brightness(180%);
+  filter: drop-shadow(1px 1px 5px) drop-shadow(-1px -1px 5px) brightness(180%);
   transition: 0.2s;
   transition-timing-function: ease-in-out;
 }
@@ -69,6 +69,17 @@ body {
   @extend .decrease;
   border-top: 0;
   border-bottom: 34px solid rgb(133, 116, 79);
+}
+
+.sessionControl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.breakControl {
+  @extend .sessionControl;
 }
 
 /* .all {

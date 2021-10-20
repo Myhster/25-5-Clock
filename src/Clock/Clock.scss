@@ -1,14 +1,33 @@
-h1 {
-  color: aqua;
+@font-face {
+  font-family: dotFont;
+  src: url(font/SUNSA___.TTF) format('truetype');
 }
 
 body {
-  background: rgb(190, 190, 190);
+  background: rgb(27, 27, 27);
+  color: black;
+  font-family: 'Codystar';
+  color: aqua;
+  text-shadow: 1px 1px 2px rgb(0, 255, 255);
 }
+
+#time-left {
+  font-size: 60px;
+  //font-family: dotFont;
+  letter-spacing: 10px;
+  margin-right: 160px;
+  //background: lightcoral;
+  width: 1px;
+  text-shadow: 1px 1px 5px rgba(0, 255, 255, 0.726);
+}
+
 .dot {
   height: 10px;
   width: 10px;
-  border: solid 1px;
+  //border: solid 1px;
+  background: rgb(27, 27, 27);
+  //box-shadow: 1px 1px 1px 1px rgba(0, 255, 255, 0.171),
+  //  -1px -1px 1px 1px rgba(0, 255, 255, 0.171);
   border-radius: 50%;
   margin: auto;
   transition: 5s;
@@ -18,10 +37,10 @@ body {
 .dotBright {
   @extend .dot;
   background: aqua;
+  box-shadow: 1px 1px 15px 1px rgba(0, 255, 255, 0.726);
 }
 
 .dotContainer {
-  background-color: rgb(70, 70, 133);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,17 +51,21 @@ body {
   height: 300px;
   border-radius: 50%;
   margin: 50px;
-  background-color: rgb(94, 172, 146);
+  //background-color: rgb(94, 172, 146);
+  box-shadow: 1px 1px 15px 1px rgba(0, 255, 255, 0.726),
+    -1px -1px 15px 1px rgba(0, 255, 255, 0.726);
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 
+//--------------------------------------------------------------------
 .controlElements {
-  background: rgb(159, 182, 136);
+  //background: rgb(159, 182, 136);
   display: flex;
-  justify-content: space-evenly;
+  //justify-content: space-evenly;
+  justify-content: space-around;
   height: auto;
 }
 
@@ -50,6 +73,8 @@ body {
   cursor: pointer;
   transition: 0.2s;
   transition-timing-function: ease-in-out;
+
+  margin: 10px;
 }
 .triButton:hover {
   transform: scale(1.1);
@@ -63,14 +88,38 @@ body {
   height: 0;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-  border-top: 34px solid rgb(97, 133, 79);
+  border-top: 34px solid rgb(123, 214, 214);
 }
 .increase {
   @extend .decrease;
   border-top: 0;
-  border-bottom: 34px solid rgb(133, 116, 79);
+  border-bottom: 34px solid rgb(123, 214, 214);
 }
 
+//--------------------------------------------------------------------
+.start {
+  @extend .decrease;
+  transform: rotate(270deg);
+  border-top: 34px solid rgb(226, 98, 66);
+}
+.start:hover {
+  transform: rotate(270deg);
+}
+
+.stop {
+  width: 34px;
+  height: 34px;
+  background: rgb(226, 98, 66);
+  border-radius: 2px;
+}
+
+.reset {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgb(226, 98, 66);
+}
+//--------------------------------------------------------------------
 .sessionControl {
   display: flex;
   flex-direction: column;
@@ -82,6 +131,17 @@ body {
   @extend .sessionControl;
 }
 
+.startReset {
+  //background: rgb(159, 159, 161);
+  display: flex;
+  width: 205px;
+  //flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#timer-label {
+  margin: 10px;
+}
 /* .all {
   display: flex;
 

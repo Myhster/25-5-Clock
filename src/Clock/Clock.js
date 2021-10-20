@@ -76,7 +76,7 @@ function Clock() {
 
     const newIntervalId = setInterval(() => {
       setTimeLeft((prevCount) => prevCount - 1);
-    }, 100);
+    }, 1000);
     setIntervalId(newIntervalId);
   };
 
@@ -158,28 +158,31 @@ function Clock() {
             onClick={breakDecrement}
           ></div>
         </div>
-        <div className='startReset'>
-          <div id='timer-label'>{sessionOn ? 'Session' : 'Break'}</div>
 
-          <button id='start_stop' onClick={countdown}>
-            {intervalId ? 'Stop' : <div>HI</div>}
-          </button>
-          <button id='reset' className='btn btn-danger' onClick={reset}>
-            reset
-          </button>
+        <div className='startReset'>
+          <div id='start_stop' onClick={countdown}>
+            {intervalId ? (
+              <div className='triButton stop'></div>
+            ) : (
+              <div className='triButton start'></div>
+            )}
+          </div>
+          <div id='timer-label'>{sessionOn ? 'Session' : 'Break'}</div>
+          <div id='reset' className='triButton reset' onClick={reset}></div>
         </div>
+
         <div className='sessionControl'>
           <div
-            id='session-decrement'
+            id='session-increment'
             className='triButton increase'
-            onClick={sessionDecrement}
+            onClick={sessionIncrement}
           ></div>
           <div id='session-label'>Session Length</div>
           <div id='session-length'>{sessionLength}</div>
           <div
-            id='session-increment'
+            id='session-decrement'
             className='triButton decrease'
-            onClick={sessionIncrement}
+            onClick={sessionDecrement}
           ></div>
         </div>
       </div>
